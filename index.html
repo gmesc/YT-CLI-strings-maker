@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="it" data-theme="chiaro">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>yt-dlp Command Builder</title>
+    <meta
+      name="description"
+      content="SPA locale per generare comandi yt-dlp per video e playlist YouTube."
+    />
+    <meta name="theme-color" content="#dff8f4" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="yt-dlp Builder" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./assets/pwa-icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./assets/pwa-icon.svg" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip" href="#content">Salta al contenuto</a>
+    <header class="topbar">
+      <div class="brand" aria-label="yt-dlp Command Builder">
+        <img class="brand-emoji" src="./assets/openmoji-robot.svg" alt="" aria-hidden="true" />
+        <span class="brand-word">yt-dlp builder – by <a href="https://www.insegnai.ch" target="_blank" rel="noreferrer">insegnai.ch</a></span>
+      </div>
+    </header>
+    <div class="cprog" aria-hidden="true">
+      <span class="st-appreso"></span>
+      <span class="st-ripassare"></span>
+      <span class="st-studiare"></span>
+      <span class="st-appreso current"></span>
+    </div>
+    <main id="content" class="shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">SPA locale</p>
+          <h1>yt-dlp Command Builder</h1>
+          <p>
+            Genera comandi per scaricare video e playlist tramite il
+            <button id="terminalToggle" class="text-toggle" type="button">terminale</button>.
+          </p>
+        </div>
+      </section>
+
+      <section class="presets" aria-label="Preset rapidi">
+        <button data-preset="video" type="button">Video migliore</button>
+        <button data-preset="playlist" type="button">Playlist ordinata</button>
+        <button data-preset="audio" type="button">Solo audio MP3</button>
+        <button data-preset="subs" type="button">Con sottotitoli</button>
+        <button data-preset="inspect" type="button">Solo ispezione</button>
+      </section>
+
+      <section class="layout">
+        <form id="builder" class="panel">
+          <details id="useCommands" class="info-credits use-commands command-tutorial">
+            <summary>
+              <span>Usa i comandi</span>
+            </summary>
+            <div class="info-body tutorial-body">
+              <p class="eyebrow">Tutorial</p>
+              <h3>Aprire il terminale</h3>
+              <p>
+                Questa SPA prepara una stringa yt-dlp pronta da copiare. Il download parte
+                solo quando apri il terminale, incolli il comando generato e premi Invio.
+              </p>
+
+              <section class="tutorial-step install-step">
+                <h4>Prima di iniziare</h4>
+                <p>
+                  Servono <strong>yt-dlp</strong> e, per conversioni audio/video, anche
+                  <strong>ffmpeg</strong>. Se usi Homebrew su macOS, puoi installarli con questo comando:
+                </p>
+                <div class="copy-line">
+                  <code>brew install yt-dlp ffmpeg</code>
+                  <button type="button" data-copy-text="brew install yt-dlp ffmpeg">Copia</button>
+                </div>
+                <p>
+                  Su Windows, se usi <strong>winget</strong>, puoi provare questi comandi in PowerShell:
+                </p>
+                <div class="copy-line">
+                  <code>winget install yt-dlp</code>
+                  <button type="button" data-copy-text="winget install yt-dlp">Copia</button>
+                </div>
+                <div class="copy-line">
+                  <code>winget install --id Gyan.FFmpeg</code>
+                  <button type="button" data-copy-text="winget install --id Gyan.FFmpeg">Copia</button>
+                </div>
+                <p>
+                  Istruzioni aggiornate: <a href="https://github.com/yt-dlp/yt-dlp/wiki/Installation" target="_blank" rel="noreferrer">installazione yt-dlp</a>
+                  e <a href="https://ffmpeg.org/download.html" target="_blank" rel="noreferrer">download ffmpeg</a>.
+                </p>
+              </section>
+
+              <section class="tutorial-step">
+                <h4>macOS</h4>
+                <ol>
+                  <li>Premi <kbd>Cmd</kbd> + <kbd>Spazio</kbd> per aprire Spotlight.</li>
+                  <li>Scrivi <strong>Terminale</strong>.</li>
+                  <li>Premi <kbd>Invio</kbd>.</li>
+                  <li>Incolla il comando generato con <kbd>Cmd</kbd> + <kbd>V</kbd>.</li>
+                  <li>Premi <kbd>Invio</kbd> per avviare il download.</li>
+                </ol>
+              </section>
+
+              <section class="tutorial-step">
+                <h4>Windows</h4>
+                <ol>
+                  <li>Apri il menu <strong>Start</strong>.</li>
+                  <li>Cerca <strong>PowerShell</strong> oppure <strong>Terminale</strong>.</li>
+                  <li>Aprilo e, nella SPA, seleziona <strong>PowerShell</strong> nel campo Terminale.</li>
+                  <li>Incolla il comando generato con <kbd>Ctrl</kbd> + <kbd>V</kbd>.</li>
+                  <li>Premi <kbd>Invio</kbd> per avviare il download.</li>
+                </ol>
+              </section>
+
+              <section class="tutorial-step">
+                <h4>Dove vengono salvati i file</h4>
+                <p>
+                  Usa il campo <strong>Cartella download</strong> nella sezione Input. Il builder
+                  aggiunge il flag <code>-P</code>, quindi non devi cambiare cartella nel terminale
+                  prima di lanciare il comando.
+                </p>
+              </section>
+            </div>
+          </details>
+
+          <div class="section-title">
+            <p class="eyebrow">Input</p>
+            <h2>Sorgente</h2>
+          </div>
+
+          <label class="field wide">
+            <span>URL video o playlist</span>
+            <textarea
+              id="url"
+              rows="3"
+              placeholder="https://www.youtube.com/watch?v=..."
+            ></textarea>
+          </label>
+
+          <div class="grid two terminal-grid">
+            <label class="field field-select-md">
+              <span>Tipo download</span>
+              <select id="mode">
+                <option value="video">Video singolo</option>
+                <option value="playlist">Playlist</option>
+              </select>
+            </label>
+            <label class="field field-select-md">
+              <span>Terminale</span>
+              <select id="platform">
+                <option value="posix">macOS / Linux</option>
+                <option value="powershell">PowerShell</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="grid two file-grid">
+            <div class="field">
+              <span>Cartella download</span>
+              <div class="path-control">
+                <input id="outputPath" type="text" placeholder="~/Downloads/yt-dlp" />
+                <button id="pickOutputPath" class="icon-button" type="button" aria-label="Scegli cartella download">
+                  <img src="./assets/openmoji-folder.svg" alt="" aria-hidden="true" />
+                </button>
+              </div>
+              <input id="folderFallback" type="file" webkitdirectory directory hidden />
+              <small id="outputPathHint">Flag: -P</small>
+            </div>
+            <label class="field">
+              <span>Nome file</span>
+              <input id="template" type="text" />
+              <small>Flag: -o</small>
+            </label>
+          </div>
+
+          <div class="section-title">
+            <p class="eyebrow">Qualita</p>
+            <h2>Formato</h2>
+          </div>
+
+          <div class="grid three quality-grid">
+            <label class="field field-select-xl">
+              <span>Selettore formato</span>
+              <select id="format">
+                <option value="bestvideo*+bestaudio/best">Miglior video + audio</option>
+                <option value="best">Miglior file singolo</option>
+                <option value="bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]/b">
+                  Preferisci MP4
+                </option>
+                <option value="bestaudio/best">Miglior audio sorgente</option>
+                <option value="worst">File leggero</option>
+              </select>
+              <small>Flag: -f</small>
+            </label>
+            <label class="field field-select-sm">
+              <span>Altezza massima</span>
+              <select id="maxHeight">
+                <option value="">Nessun limite</option>
+                <option value="2160">4K</option>
+                <option value="1440">1440p</option>
+                <option value="1080">1080p</option>
+                <option value="720">720p</option>
+                <option value="480">480p</option>
+              </select>
+            </label>
+            <label class="field field-select-xs">
+              <span>Container finale</span>
+              <select id="mergeFormat">
+                <option value="mp4">MP4</option>
+                <option value="mkv">MKV</option>
+                <option value="webm">WebM</option>
+                <option value="">Automatico</option>
+              </select>
+              <small>Flag: --merge-output-format</small>
+            </label>
+          </div>
+
+          <div class="checks">
+            <label><input id="extractAudio" type="checkbox" /> Estrai audio</label>
+            <label><input id="embedMetadata" type="checkbox" /> Incorpora metadata</label>
+            <label><input id="embedThumbnail" type="checkbox" /> Incorpora copertina</label>
+            <label><input id="writeInfoJson" type="checkbox" /> Salva info JSON</label>
+            <label><input id="writeThumbnail" type="checkbox" /> Salva thumbnail</label>
+          </div>
+
+          <div class="grid two audio-grid">
+            <label class="field field-select-xs">
+              <span>Formato audio</span>
+              <select id="audioFormat">
+                <option value="mp3">MP3</option>
+                <option value="m4a">M4A</option>
+                <option value="opus">Opus</option>
+                <option value="flac">FLAC</option>
+                <option value="wav">WAV</option>
+                <option value="best">Best</option>
+              </select>
+              <small>Flag: --audio-format</small>
+            </label>
+            <label class="field field-tiny">
+              <span>Qualita audio</span>
+              <input id="audioQuality" type="text" placeholder="0" />
+              <small>0 migliore, 10 peggiore</small>
+            </label>
+          </div>
+
+          <div class="section-title">
+            <p class="eyebrow">Playlist</p>
+            <h2>Intervallo e ordine</h2>
+          </div>
+
+          <div class="grid three playlist-grid">
+            <label class="field field-tiny">
+              <span>Da elemento</span>
+              <input id="playlistStart" type="number" placeholder="1" />
+            </label>
+            <label class="field field-tiny">
+              <span>A elemento</span>
+              <input id="playlistEnd" type="number" placeholder="20" />
+            </label>
+            <label class="field field-compact">
+              <span>Elementi specifici</span>
+              <input id="playlistItems" type="text" placeholder="1,3,7-10" />
+            </label>
+          </div>
+
+          <div class="checks">
+            <label><input id="noPlaylist" type="checkbox" /> Con URL video ignora playlist</label>
+            <label><input id="playlistReverse" type="checkbox" /> Ordine inverso</label>
+            <label><input id="playlistRandom" type="checkbox" /> Ordine casuale</label>
+            <label><input id="ignoreErrors" type="checkbox" /> Continua se un video fallisce</label>
+          </div>
+
+          <div class="section-title">
+            <p class="eyebrow">Sottotitoli</p>
+            <h2>Lingue e incorporamento</h2>
+          </div>
+
+          <div class="checks">
+            <label><input id="writeSubs" type="checkbox" /> Scarica sottotitoli</label>
+            <label><input id="writeAutoSubs" type="checkbox" /> Sottotitoli automatici</label>
+            <label><input id="embedSubs" type="checkbox" /> Incorpora sottotitoli</label>
+          </div>
+
+          <div class="grid two subtitles-grid">
+            <label class="field field-compact">
+              <span>Lingue sottotitoli</span>
+              <input id="subLangs" type="text" placeholder="it,en.*" />
+              <small>Flag: --sub-langs</small>
+            </label>
+            <label class="field field-compact">
+              <span>Formato sottotitoli</span>
+              <input id="subFormat" type="text" placeholder="srt/best" />
+              <small>Flag: --sub-format</small>
+            </label>
+          </div>
+
+          <div class="section-title">
+            <p class="eyebrow">Automazione</p>
+            <h2>File, cookie e rete</h2>
+          </div>
+
+          <div class="checks automation-checks">
+            <label><input id="skipDownloaded" type="checkbox" /> Non scaricare gia archiviati</label>
+            <label><input id="logErrors" type="checkbox" /> Salva log errori</label>
+          </div>
+
+          <div class="grid three automation-grid">
+            <label class="field field-compact">
+              <span>Archivio gia scaricati</span>
+              <input id="archiveFile" type="text" placeholder="downloaded.txt" />
+              <small>Flag: --download-archive</small>
+            </label>
+            <label class="field field-compact">
+              <span>Log errori</span>
+              <input id="errorLogFile" type="text" placeholder="yt-dlp-errors.log" />
+              <small>Shell: 2&gt;&gt;</small>
+            </label>
+            <label class="field field-compact">
+              <span>File lista URL</span>
+              <input id="batchFile" type="text" placeholder="urls.txt" />
+              <small>Flag: --batch-file</small>
+            </label>
+            <label class="field field-select-md">
+              <span>Cookie dal browser</span>
+              <select id="cookiesBrowser">
+                <option value="">Non usare cookie</option>
+                <option value="chrome">Chrome</option>
+                <option value="safari">Safari</option>
+                <option value="firefox">Firefox</option>
+                <option value="edge">Edge</option>
+                <option value="brave">Brave</option>
+              </select>
+              <small>Flag: --cookies-from-browser</small>
+            </label>
+            <label class="field field-tiny">
+              <span>Download paralleli</span>
+              <input id="concurrentFragments" type="number" min="1" />
+              <small>Flag: -N</small>
+            </label>
+            <label class="field field-tiny">
+              <span>Limite velocita</span>
+              <input id="rateLimit" type="text" placeholder="2M" />
+              <small>Flag: --limit-rate</small>
+            </label>
+            <label class="field field-tiny">
+              <span>Tentativi</span>
+              <input id="retries" type="text" placeholder="10" />
+              <small>Flag: --retries</small>
+            </label>
+            <label class="field field-tiny">
+              <span>Retry frammenti</span>
+              <input id="fragmentRetries" type="text" placeholder="10" />
+              <small>Flag: --fragment-retries</small>
+            </label>
+            <label class="field field-tiny">
+              <span>Retry estrattore</span>
+              <input id="extractorRetries" type="text" placeholder="3" />
+              <small>Flag: --extractor-retries</small>
+            </label>
+            <label class="field field-compact">
+              <span>Pausa retry</span>
+              <input id="retrySleep" type="text" placeholder="linear=5::30" />
+              <small>Flag: --retry-sleep</small>
+            </label>
+            <label class="field field-tiny">
+              <span>Stop playlist errori</span>
+              <input id="skipPlaylistAfterErrors" type="number" min="1" placeholder="5" />
+              <small>Flag: --skip-playlist-after-errors</small>
+            </label>
+          </div>
+
+          <div class="checks">
+            <label><input id="simulate" type="checkbox" /> Simula senza scaricare</label>
+            <label><input id="listFormats" type="checkbox" /> Elenca formati disponibili</label>
+            <label><input id="continueDownloads" type="checkbox" /> Riprendi download parziali</label>
+          </div>
+
+        </form>
+
+        <aside class="panel output-panel">
+          <div class="section-title">
+            <p class="eyebrow">Output</p>
+            <h2>Stringa da copiare</h2>
+          </div>
+          <textarea id="commandOutput" readonly rows="12" placeholder="Premi Genera per creare il comando."></textarea>
+          <div class="actions output-actions">
+            <button id="generate" type="button">Genera</button>
+            <button id="reset" class="secondary" type="button">Reset</button>
+            <button id="copy" type="button">Copia comando</button>
+            <button id="copyConfig" class="secondary" type="button">Copia .conf</button>
+          </div>
+          <p id="copyStatus" class="copy-status" aria-live="polite"></p>
+
+          <details class="info-credits">
+            <summary>
+              <span>Info & credits</span>
+            </summary>
+            <div class="info-body">
+              <p class="eyebrow">Approfondimenti</p>
+              <h3>Documentazione e credits</h3>
+              <p>
+                Le opzioni sono basate sulla documentazione ufficiale di yt-dlp.
+                Verifica il README per dettagli aggiornati, compatibilita e requisiti
+                come ffmpeg.
+              </p>
+              <div class="link-grid compact-links">
+                <a href="https://github.com/yt-dlp/yt-dlp" target="_blank" rel="noreferrer">
+                  Repository GitHub
+                </a>
+                <a href="https://github.com/yt-dlp/yt-dlp#usage-and-options" target="_blank" rel="noreferrer">
+                  Usage and options
+                </a>
+                <a href="https://github.com/yt-dlp/yt-dlp#format-selection" target="_blank" rel="noreferrer">
+                  Format selection
+                </a>
+                <a href="https://github.com/yt-dlp/yt-dlp/blob/master/Maintainers.md" target="_blank" rel="noreferrer">
+                  Maintainers e credits
+                </a>
+              </div>
+            </div>
+          </details>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="site-foot">
+      <span>
+        Basato sulla documentazione di
+        <a href="https://github.com/yt-dlp/yt-dlp" target="_blank" rel="noreferrer">yt-dlp</a>
+        (<a href="https://github.com/yt-dlp/yt-dlp/blob/master/LICENSE" target="_blank" rel="noreferrer">Unlicense</a>).
+      </span>
+      <span>
+        Icone di
+        <a href="https://openmoji.org/" target="_blank" rel="noreferrer">OpenMoji</a>
+        (<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">CC BY-SA 4.0</a>).
+      </span>
+    </footer>
+    <script src="./app.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("./service-worker.js");
+        });
+      }
+    </script>
+  </body>
+</html>

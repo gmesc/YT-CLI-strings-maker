@@ -1,0 +1,24 @@
+{
+  "name": "yt-dlp Command Builder",
+  "short_name": "yt-dlp Builder",
+  "description": "Genera comandi per scaricare video e playlist con yt-dlp tramite terminale.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f8f7f1",
+  "theme_color": "#dff8f4",
+  "categories": [
+    "utilities",
+    "productivity"
+  ],
+  "lang": "it",
+  "icons": [
+    {
+      "src": "./assets/pwa-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

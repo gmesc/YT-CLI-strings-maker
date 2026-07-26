@@ -40,3 +40,10 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# local yt-dlp outputs
+/downloads/
+downloaded.txt
+yt-dlp-errors.log
+*.part
+*.ytdl
