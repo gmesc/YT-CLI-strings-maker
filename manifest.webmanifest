@@ -1,6 +1,6 @@
 {
-  "name": "yt-dlp Command Builder",
-  "short_name": "yt-dlp Builder",
+  "name": "YT CLI strings maker",
+  "short_name": "YT CLI maker",
   "description": "Genera comandi per scaricare video e playlist con yt-dlp tramite terminale.",
   "start_url": "./",
   "scope": "./",

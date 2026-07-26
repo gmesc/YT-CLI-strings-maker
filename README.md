@@ -1,4 +1,4 @@
-# yt-dlp Command Builder
+# YT CLI strings maker
 
 SPA/PWA locale per generare comandi `yt-dlp` user-friendly per scaricare video, playlist, audio e sottotitoli tramite terminale.
 
