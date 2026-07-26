@@ -757,7 +757,12 @@ textarea {
   background: color-mix(in srgb, var(--teal) 16%, var(--panel));
   color: var(--teal-strong);
   padding: 0 1rem;
+  font-size: 13px;
   font-weight: 900;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .actions button.secondary {
@@ -778,6 +783,17 @@ textarea {
 
 .output-actions button {
   width: 100%;
+  min-width: 0;
+}
+
+.output-actions #generate,
+.output-actions #reset {
+  font-size: 15px;
+}
+
+.output-actions #copy,
+.output-actions #copyConfig {
+  font-size: 12px;
 }
 
 .actions button:disabled {
